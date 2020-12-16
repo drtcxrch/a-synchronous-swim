@@ -22,8 +22,20 @@ describe('server responses', () => {
   });
 
   it('should respond to a GET request for a swim command', (done) => {
-    // write your test here
-    done();
+    let { req, res } = server.mock('/', 'GET');
+    let commands = ['up', 'down', 'left', 'right']
+
+    httpHandler.router(req, res, () => {
+      expect(res._responseCode).to.equal(200);
+      expect(res._ended).to.equal(true);
+      res._data = commands[Math.floor(Math.random() * commands.length)];
+      //expect(res._data.toString());
+      console.log('res._data', res._data);
+      expect(res._data).to.equal('up' || 'down' || 'left' || 'right');
+
+
+      done();
+    });
   });
 
   xit('should respond with 404 to a GET request for a missing background image', (done) => {
