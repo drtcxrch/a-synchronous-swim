@@ -1,7 +1,7 @@
 
 /////////////////////////////////////////////////
 // Mock out the node request / response functions
-// Note: these are useful when running bare node.
+// Note: these are useful whecdn running bare node.
 // There are better options if using expressjs.
 /////////////////////////////////////////////////
 
