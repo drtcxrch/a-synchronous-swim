@@ -29,10 +29,7 @@ describe('server responses', () => {
       expect(res._responseCode).to.equal(200);
       expect(res._ended).to.equal(true);
       res._data = commands[Math.floor(Math.random() * commands.length)];
-      //expect(res._data.toString());
-      console.log('res._data', res._data);
-      expect(res._data).to.equal('up' || 'down' || 'left' || 'right');
-
+      expect(['up', 'down', 'left', 'right']).to.include(res._data);
 
       done();
     });
