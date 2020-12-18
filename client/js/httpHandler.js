@@ -3,9 +3,19 @@
   const serverUrl = 'http://127.0.0.1:3000';
 
   //
-  // TODO: build the swim command fetcher here
+  // TODO: build the swim command fetcher or AJAX GET REQUEST here
   //
+  const ajaxFetcher = () => {
 
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      success: (data) => {
+        SwimTeam.move(data);
+      }
+    });
+  };
+  setInterval(() => {ajaxFetcher()}, 4000);
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
