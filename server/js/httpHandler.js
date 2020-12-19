@@ -17,16 +17,17 @@ module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
   let message = messages.dequeue() || '';
   console.log(res);
+  console.log('request is', req);
   if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     //res.write()//?????
     res.end();
     next();
   }
-  console.log('request is', req)
+
   if (req.method === 'GET') {
     if //((req._postData === undefined) &&
-    (req.url === 'spec/missing.jpg') {
+      (req.url !== '/' && req.url !== './background.jpg') {
       res.writeHead(404, headers);
       res.write(message);
       res.end();
