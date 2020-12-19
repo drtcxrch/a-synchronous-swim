@@ -1,4 +1,4 @@
-const messages = []; // the storage unit for messages
+const messages = []; // the storage unit for messages, or a Queue
 
 module.exports.enqueue = (message) => {
   console.log(`Enqueing message: ${message}`);
@@ -6,6 +6,11 @@ module.exports.enqueue = (message) => {
 };
 
 module.exports.dequeue = () => {
-  // returns undefined if messages array is empty
-  return messages.shift();
+  // return (messages.length === 0 ? 'I\'m empty' : messages.shift());
+  if (messages.length === 0) {
+    return;
+  } else {
+    return messages.shift();
+  }
+
 };

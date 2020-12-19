@@ -16,7 +16,8 @@ describe('server responses', () => {
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-    expect(res._data.toString()).to.be.empty;
+    //console.log(res._data)
+    expect(res._data).to.be.empty;
 
     done();
   });
@@ -30,7 +31,6 @@ describe('server responses', () => {
       expect(res._ended).to.equal(true);
       res._data = commands[Math.floor(Math.random() * commands.length)];
       expect(['up', 'down', 'left', 'right']).to.include(res._data);
-
       done();
     });
   });
