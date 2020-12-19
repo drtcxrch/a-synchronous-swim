@@ -11,7 +11,10 @@
       type: 'GET',
       url: serverUrl,
       success: (data) => {
-        SwimTeam.move(data);
+        SwimTeam.move(data)
+      },
+      error: (err) => {
+        console.log(err)
       }
     });
   };

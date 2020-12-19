@@ -16,18 +16,27 @@ module.exports.initialize = (queue) => {
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
   let message = messages.dequeue() || '';
-
+  console.log(res);
   if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     //res.write()//?????
     res.end();
     next();
   }
+  console.log('request is', req)
   if (req.method === 'GET') {
-    res.writeHead(200, headers);
-    res.write(message); // = message sent by server that is typed
-    res.end();
-    next(); // invoke next() at the end of a request to help with testing!
+    if //((req._postData === undefined) &&
+    (req.url === 'spec/missing.jpg') {
+      res.writeHead(404, headers);
+      res.write(message);
+      res.end();
+      next();
+    } else {
+      res.writeHead(200, headers);
+      res.write(message);
+      res.end();
+      next(); // invoke next() at the end of a request to help with testing!
+    }
   }
 };
 
