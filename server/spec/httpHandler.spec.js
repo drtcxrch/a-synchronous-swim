@@ -5,8 +5,8 @@ const expect = require('chai').expect;
 const server = require('./mockServer');
 
 const httpHandler = require('../js/httpHandler');
-
-
+const messages = require('../js/messageQueue');
+httpHandler.initialize(messages);
 
 describe('server responses', () => {
 
@@ -17,25 +17,24 @@ describe('server responses', () => {
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
     //console.log(res._data)
-    expect(res._data).to.be.empty;
+    expect(res._data.toString()).to.be.empty;
 
     done();
   });
 
   it('should respond to a GET request for a swim command', (done) => {
     let { req, res } = server.mock('/', 'GET');
-    const messages = require('../js/messageQueue');
-    httpHandler.initialize(messages);
+
     let commands = ['up', 'down', 'left', 'right'];
     let index = Math.floor(Math.random() * commands.length);
-    messages.enqueue('up');
+    messages.enqueue(commands[index]);
 
-    httpHandler.router(req, res, () => {
+    httpHandler.router(req, res);
       expect(res._responseCode).to.equal(200);
       expect(res._ended).to.equal(true);
       expect(commands).to.contain(res._data.toString());
-      done();
-    });
+        done();
+
   });
 
   it('should respond with 404 to a GET request for a missing background image', (done) => {
@@ -83,7 +82,7 @@ describe('server responses', () => {
       httpHandler.router(post.req, post.res, () => {
         let get = server.mock('/background.jpg', 'GET');
         httpHandler.router(get.req, get.res, () => {
-          const multipart = require('/multipartUtils');
+          const multipart = require('../js/multipartUtils');
           var file = multipart.getFile(fileData);
           expect(Buffer.compare(file.data, get.res._data)).to.equal(0);
           done();

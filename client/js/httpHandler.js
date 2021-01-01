@@ -7,44 +7,19 @@
   //
   const ajaxFetcher = () => {
 
-    $.ajax({
-      type: 'GET',
+    $.get({
       url: serverUrl,
       success: (data) => {
         SwimTeam.move(data)
       },
       complete: () => {
-        // setTimeout(ajaxFetcher, 100)
+        setTimeout(ajaxFetcher, 100)
       }
     });
   };
 
-  setTimeout(ajaxFetcher, 0);
+ ajaxFetcher();
 
-  const ajaxBackgroundImage = () => {
-
-    $.ajax({
-      type: 'GET',
-      url: 'http://127.0.0.1:3000/background.jpg',
-      dataType: 'html',
-      async: false,
-      crossDomain: 'true',
-      success: (data, status) => {
-        console.log("Status: "+status+"\nData: "+data);
-        result = data;
-        $('.background').css('background-image', 'url(' + 'data:image/png;base64,' + data + ')');
-
-        // /* creating image */
-        // var img = $('<img id="image_id">');
-        // img.attr('src', 'data:image/gif;base64,' + data);
-        // img.appendTo('.background');
-      },
-      error: (err) => {
-        console.log('Error is', err)
-      }
-    });
-  };
-  ajaxBackgroundImage();
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -56,7 +31,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: '/background.jpg',
+      url: serverUrl + '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
